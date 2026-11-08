@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抖漫-热门短动画与漫画推荐_短动画_漫画_追更</title>
+  <meta name="description" content="抖漫专题聚合页，为你整理热门短动画、漫画连载、新番速递与追更指南。从题材分类到角色解析，从最新更新到社区讨论，发现值得反复看的抖漫内容与同好推荐。">
+  <meta name="keywords" content="抖漫,短动画,漫画推荐,追更指南,新番速递">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
+  <style>
+    /* ========== 全局变量与基础 ========== */
+    :root {
+      --dm-bg: #f7f8fc;
+      --dm-surface: #ffffff;
+      --dm-text: #1a1e2b;
+      --dm-text-soft: #4a4f5e;
+      --dm-border: #e2e6f0;
+      --dm-primary: #6c5ce7;
+      --dm-primary-light: #a29bfe;
+      --dm-primary-bg: #efedff;
+      --dm-accent: #fd79a8;
+      --dm-radius: 18px;
+      --dm-radius-sm: 12px;
+      --dm-shadow: 0 8px 24px rgba(108, 92, 231, 0.08);
+      --dm-shadow-hover: 0 14px 30px rgba(108, 92, 231, 0.16);
+      --dm-max-width: 1200px;
+      --dm-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--dm-font);
+      background: var(--dm-bg);
+      color: var(--dm-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul, ol {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .dm-container {
+      max-width: var(--dm-max-width);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ========== 顶部导航 ========== */
+    .dm-nav {
+      background: var(--dm-surface);
+      border-bottom: 1px solid var(--dm-border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .dm-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 24px;
+    }
+
+    .dm-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -0.5px;
+      color: var(--dm-primary);
+      flex-shrink: 0;
+    }
+
+    .dm-logo-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--dm-primary), var(--dm-accent));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .dm-nav-links {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      flex: 1;
+      justify-content: flex-start;
+      scrollbar-width: none;
+    }
+
+    .dm-nav-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .dm-nav-links a {
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--dm-text-soft);
+      white-space: nowrap;
+      transition: 0.2s;
+    }
+
+    .dm-nav-links a:hover {
+      background: var(--dm-primary-bg);
+      color: var(--dm-primary);
+    }
+
+    .dm-nav-cta {
+      background: var(--dm-primary);
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: 0.2s;
+      flex-shrink: 0;
+    }
+
+    .dm-nav-cta:hover {
+      background: #5a4bd1;
+      transform: scale(1.02);
+    }
+
+    /* ========== Banner 区域 ========== */
+    .dm-banner {
+      background: linear-gradient(135deg, #2d2a4a 0%, #1e1b33 100%);
+      color: #fff;
+      padding: 56px 0 60px;
+      border-radius: 0 0 40px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dm-banner::after {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(108, 92, 231, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .dm-banner-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 720px;
+    }
+
+    .dm-banner h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .dm-banner h1 span {
+      background: linear-gradient(120deg, #a29bfe, #fd79a8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .dm-banner-desc {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.7;
+      max-width: 580px;
+    }
+
+    .dm-search-box {
+      display: flex;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 60px;
+      padding: 6px;
+      max-width: 520px;
+      margin-top: 4px;
+    }
+
+    .dm-search-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 12px 20px;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .dm-search-box input::placeholder {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .dm-search-box button {
+      background: var(--dm-primary);
+      border: none;
+      color: #fff;
+      padding: 10px 28px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .dm-search-box button:hover {
+      background: #5a4bd1;
+    }
+
+    .dm-banner-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .dm-banner-tags a {
+      padding: 8px 18px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 40px;
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.85);
+      transition: 0.2s;
+    }
+
+    .dm-banner-tags a:hover {
+      background: rgba(108, 92, 231, 0.45);
+      border-color: var(--dm-primary-light);
+    }
+
+    /* ========== 通用 Section ========== */
+    .dm-section {
+      padding: 56px 0;
+    }
+
+    .dm-section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .dm-section-title {
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dm-section-title::before {
+      content: '';
+      width: 6px;
+      height: 28px;
+      background: linear-gradient(180deg, var(--dm-primary), var(--dm-accent));
+      border-radius: 4px;
+    }
+
+    .dm-section-more {
+      font-size: 0.9rem;
+      color: var(--dm-primary);
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 30px;
+      background: var(--dm-primary-bg);
+      transition: 0.2s;
+    }
+
+    .dm-section-more:hover {
+      background: var(--dm-primary);
+      color: #fff;
+    }
+
+    /* ========== 内容简介 ========== */
+    .dm-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .dm-intro-text p {
+      color: var(--dm-text-soft);
+      margin-bottom: 16px;
+      font-size: 1rem;
+      line-height: 1.85;
+    }
+
+    .dm-intro-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .dm-stat-card {
+      background: var(--dm-surface);
+      border-radius: var(--dm-radius);
+      padding: 24px 20px;
+      box-shadow: var(--dm-shadow);
+      text-align: center;
+      border: 1px solid var(--dm-border);
+    }
+
+    .dm-stat-card strong {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--dm-primary);
+      margin-bottom: 4px;
+    }
+
+    .dm-stat-card span {
+      font-size: 0.88rem;
+      color: var(--dm-text-soft);
+    }
+
+    /* ========== 热门推荐卡片网格 ========== */
+    .dm-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .dm-card {
+      background: var(--dm-surface);
+      border-radius: var(--dm-radius);
+      padding: 22px;
+      box-shadow: var(--dm-shadow);
+      border: 1px solid var(--dm-border);
+      transition: 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .dm-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--dm-shadow-hover);
+    }
+
+    .dm-card-cover {
+      height: 120px;
+      border-radius: var(--dm-radius-sm);
+      background: linear-gradient(135deg, var(--dm-primary-bg), #ffeef5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--dm-primary);
+      letter-spacing: -2px;
+    }
+
+    .dm-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .dm-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .dm-card-tags span {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      background: var(--dm-primary-bg);
+      color: var(--dm-primary);
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .dm-card-desc {
+      font-size: 0.88rem;
+      color: var(--dm-text-soft);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .dm-card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #8e92a3;
+      border-top: 1px solid var(--dm-border);
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+
+    /* ========== 最新更新列表 ========== */
+    .dm-update-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .dm-update-item {
+      background: var(--dm-surface);
+      border-radius: var(--dm-radius-sm);
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      border: 1px solid var(--dm-border);
+      transition: 0.2s;
+    }
+
+    .dm-update-item:hover {
+      border-color: var(--dm-primary-light);
+      background: #faf9ff;
+    }
+
+    .dm-update-time {
+      font-size: 0.78rem;
+      color: #a0a4b8;
+      white-space: nowrap;
+      min-width: 70px;
+    }
+
+    .dm-update-title {
+      font-weight: 650;
+      font-size: 0.98rem;
+      min-width: 140px;
+    }
+
+    .dm-update-desc {
+      font-size: 0.88rem;
+      color: var(--dm-text-soft);
+      flex: 1;
+    }
+
+    /* ========== 分类入口 ========== */
+    .dm-cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .dm-cat-item {
+      background: var(--dm-surface);
+      border-radius: var(--dm-radius-sm);
+      padding: 22px 16px;
+      text-align: center;
+      border: 1px solid var(--dm-border);
+      transition: 0.2s;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--dm-text-soft);
+      box-shadow: var(--dm-shadow);
+    }
+
+    .dm-cat-item:hover {
+      background: var(--dm-primary-bg);
+      border-color: var(--dm-primary-light);
+      color: var(--dm-primary);
+      transform: translateY(-2px);
+    }
+
+    .dm-cat-item span {
+      display: block;
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+    }
+
+    /* ========== 深度解析正文 ========== */
+    .dm-deep {
+      background: var(--dm-surface);
+      border-radius: var(--dm-radius);
+      padding: 40px;
+      border: 1px solid var(--dm-border);
+      box-shadow: var(--dm-shadow);
+    }
+
+    .dm-deep h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .dm-deep p {
+      color: var(--dm-text-soft);
+      line-height: 1.9;
+      margin-bottom: 18px;
+      font-size: 0.98rem;
+    }
+
+    .dm-deep p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ========== 体验指南 ========== */
+    .dm-guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .dm-guide-item {
+      background: var(--dm-surface);
+      border-radius: var(--dm-radius);
+      padding: 28px 24px;
+      border: 1px solid var(--dm-border);
+      box-shadow: var(--dm-shadow);
+    }
+
+    .dm-guide-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dm-guide-item p {
+      font-size: 0.9rem;
+      color: var(--dm-text-soft);
+      line-height: 1.75;
+    }
+
+    /* ========== FAQ 手风琴 ========== */
+    .dm-faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dm-faq-item {
+      background: var(--dm-surface);
+      border-radius: var(--dm-radius-sm);
+      border: 1px solid var(--dm-border);
+      overflow: hidden;
+    }
+
+    .dm-faq-q {
+      padding: 18px 24px;
+      font-weight: 650;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--dm-surface);
+      transition: 0.2s;
+    }
+
+    .dm-faq-q:hover {
+      background: #faf9ff;
+    }
+
+    .dm-faq-q::after {
+      content: '+';
+      font-size: 1.3rem;
+      color: var(--dm-primary);
+      font-weight: 400;
+    }
+
+    .dm-faq-a {
+      padding: 0 24px 20px;
+      color: var(--dm-text-soft);
+      font-size: 0.92rem;
+      line-height: 1.8;
+      display: block;
+    }
+
+    /* ========== 用户评论 ========== */
+    .dm-comments {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .dm-comment {
+      background: var(--dm-surface);
+      border-radius: var(--dm-radius-sm);
+      padding: 18px 20px;
+      border: 1px solid var(--dm-border);
+    }
+
+    .dm-comment-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .dm-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--dm-primary-light), var(--dm-accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .dm-comment-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .dm-comment-date {
+      font-size: 0.75rem;
+      color: #a0a4b8;
+      margin-left: auto;
+    }
+
+    .dm-comment-text {
+      font-size: 0.9rem;
+      color: var(--dm-text-soft);
+      line-height: 1.7;
+    }
+
+    /* ========== 相关资讯 ========== */
+    .dm-news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .dm-news-card {
+      background: var(--dm-surface);
+      border-radius: var(--dm-radius);
+      padding: 22px;
+      border: 1px solid var(--dm-border);
+      box-shadow: var(--dm-shadow);
+      transition: 0.2s;
+    }
+
+    .dm-news-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--dm-shadow-hover);
+    }
+
+    .dm-news-date {
+      font-size: 0.78rem;
+      color: #a0a4b8;
+      margin-bottom: 8px;
+    }
+
+    .dm-news-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .dm-news-card p {
+      font-size: 0.85rem;
+      color: var(--dm-text-soft);
+      line-height: 1.7;
+    }
+
+    /* ========== 页脚 ========== */
+    .dm-footer {
+      background: #1a1e2b;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 48px 0 32px;
+      margin-top: 40px;
+      border-radius: 40px 40px 0 0;
+    }
+
+    .dm-footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 36px;
+    }
+
+    .dm-footer h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .dm-footer p {
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .dm-footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dm-footer-links a {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: 0.2s;
+    }
+
+    .dm-footer-links a:hover {
+      color: var(--dm-primary-light);
+    }
+
+    .dm-footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 900px) {
+      .dm-intro {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .dm-cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .dm-guide-grid {
+        grid-template-columns: 1fr;
+      }
+      .dm-comments {
+        grid-template-columns: 1fr;
+      }
+      .dm-news-grid {
+        grid-template-columns: 1fr;
+      }
+      .dm-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .dm-nav-inner {
+        gap: 12px;
+        height: 58px;
+      }
+      .dm-nav-links a {
+        padding: 6px 10px;
+        font-size: 0.82rem;
+      }
+      .dm-logo {
+        font-size: 1.2rem;
+      }
+      .dm-logo-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+      }
+      .dm-banner {
+        padding: 36px 0 40px;
+        border-radius: 0 0 28px 28px;
+      }
+      .dm-banner h1 {
+        font-size: 1.8rem;
+      }
+      .dm-banner-desc {
+        font-size: 0.92rem;
+      }
+      .dm-search-box {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        gap: 10px;
+      }
+      .dm-search-box input {
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .dm-search-box button {
+        width: 100%;
+        padding: 12px;
+      }
+      .dm-section {
+        padding: 36px 0;
+      }
+      .dm-section-title {
+        font-size: 1.3rem;
+      }
+      .dm-deep {
+        padding: 24px;
+      }
+      .dm-card-grid {
+        grid-template-columns: 1fr;
+      }
+      .dm-update-item {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .dm-update-title {
+        min-width: auto;
+      }
+      .dm-cat-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .dm-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .dm-footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <header class="dm-nav">
+    <div class="dm-container dm-nav-inner">
+      <a href="/#home" class="dm-logo">
+        <span class="dm-logo-icon">抖</span>
+        抖漫
+      </a>
+      <nav class="dm-nav-links" aria-label="主导航">
+        <a href="/#hot">热门推荐</a>
+        <a href="/#update">最新更新</a>
+        <a href="/#category">分类入口</a>
+        <a href="/#deep">深度解析</a>
+        <a href="/#faq">常见问题</a>
+        <a href="/#comments">用户评论</a>
+        <a href="/#news">相关资讯</a>
+      </nav>
+      <a href="/#subscribe" class="dm-nav-cta">订阅追更</a>
+    </div>
+  </header>
+
+  <!-- 首屏 Banner -->
+  <section class="dm-banner" id="home">
+    <div class="dm-container">
+      <div class="dm-banner-content">
+        <h1>抖漫 <span>短动画·漫画·追更</span></h1>
+        <p class="dm-banner-desc">
+          抖漫专题聚合站，整理近期值得一看的短动画与漫画连载。从爽点节奏到角色塑造，
+          从更新动态到同好讨论，帮你快速找到下一部想看的内容。
+        </p>
+        <div class="dm-search-box">
+          <input type="text" placeholder="搜索抖漫、短动画、漫画名或作者…" aria-label="站内搜索">
+          <button type="button">搜索一下</button>
+        </div>
+        <div class="dm-banner-tags">
+          <a href="/#hot">热门短动画</a>
+          <a href="/#update">今日更新</a>
+          <a href="/#category">甜宠漫画</a>
+          <a href="/#category">热血战斗</a>
+          <a href="/#deep">新番速递</a>
+          <a href="/#comments">追更讨论</a>
+          <a href="/#news">行业动态</a>
+          <a href="/#faq">新手入坑</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 内容简介 -->
+  <section class="dm-section" id="about">
+    <div class="dm-container">
+      <div class="dm-section-header">
+        <h2 class="dm-section-title">关于抖漫专题</h2>
+        <a href="/#hot" class="dm-section-more">查看热门 →</a>
+      </div>
+      <div class="dm-intro">
+        <div class="dm-intro-text">
+          <p>
+            “抖漫”这个入口聚合的是短动画与漫画内容的消费需求。你可能是想找下饭短动画、
+            通勤路上能刷完的漫画连载，或者想看看最近大家都在追什么新作。这个页面就是
+            围绕这些真实需求搭建的内容导航：热门推荐、更新追踪、分类筛选、深度解析和
+            同好评论都放在了一起。
+          </p>
+          <p>
+            对刚接触抖漫内容的读者来说，最怕的是不知道从哪部开始看。我们按照题材、
+            节奏和讨论热度做了分层，甜宠、热血、悬疑、搞笑、奇幻等类型都有对应的入口，
+            方便你按口味挑选。每张推荐卡片都附带了简短看点，避免被标题误导。
+          </p>
+          <p>
+            如果你已经在追更，最新更新列表和资讯板块会告诉你哪些作品有了新内容；
+            评论区的讨论也能帮你判断一部作品值不值得继续花时间。页面适合收藏，
+            下次打开就能直接定位到感兴趣的部分。
+          </p>
+        </div>
+        <div class="dm-intro-stats">
+          <div class="dm-stat-card">
+            <strong>120+</strong>
+            <span>收录抖漫作品</span>
+          </div>
+          <div class="dm-stat-card">
+            <strong>32</strong>
+            <span>本周更新条目</span>
+          </div>
+          <div class="dm-stat-card">
+            <strong>8</strong>
+            <span>题材分类入口</span>
+          </div>
+          <div class="dm-stat-card">
+            <strong>4600+</strong>
+            <span>社区讨论热度</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 热门内容推荐 -->
+  <section class="dm-section" id="hot">
+    <div class="dm-container">
+      <div class="dm-section-header">
+        <h2 class="dm-section-title">热门抖漫推荐</h2>
+        <a href="/#update" class="dm-section-more">更多更新 →</a>
+      </div>
+      <div class="dm-card-grid">
+        <div class="dm-card">
+          <div class="dm-card-cover">甜</div>
+          <h3>《偷偷藏不住》漫画版</h3>
+          <div class="dm-card-tags"><span>甜宠</span><span>校园</span><span>高甜</span></div>
+          <p class="dm-card-desc">暗恋线拉满，画风细腻，适合喜欢轻甜日常的读者，每话结尾都有小心动。</p>
+          <div class="dm-card-meta"><span>热度 9.2</span><span>更新至第48话</span></div>
+        </div>
+        <div class="dm-card">
+          <div class="dm-card-cover">燃</div>
+          <h3>《斩夜行》短动画</h3>
+          <div class="dm-card-tags"><span>热血</span><span>战斗</span><span>短动画</span></div>
+          <p class="dm-card-desc">每集8分钟，打戏流畅，节奏快不拖沓，适合碎片时间追看的动作向作品。</p>
+          <div class="dm-card-meta"><span>评分 8.9</span><span>更新至第12集</span></div>
+        </div>
+        <div class="dm-card">
+          <div class="dm-card-cover">悬</div>
+          <h3>《雾山迷局》漫画</h3>
+          <div class="dm-card-tags"><span>悬疑</span><span>推理</span><span>反转</span></div>
+          <p class="dm-card-desc">开篇三话连续反转，画风偏暗黑，适合喜欢烧脑剧情的读者，建议连看。</p>
+          <div class="dm-card-meta"><span>热度 8.7</span><span>更新至第31话</span></div>
+        </div>
+        <div class="dm-card">
+          <div class="dm-card-cover">笑</div>
+          <h3>《社畜变成猫》短动画</h3>
+          <div class="dm-card-tags"><span>搞笑</span><span>日常</span><span>治愈</span></div>
+          <p class="dm-card-desc">每集5分钟的泡面番，笑点密集，用猫的视角吐槽职场，轻松解压。</p>
+          <div class="dm-card-meta"><span>评分 9.0</span><span>全24集已完结</span></div>
+        </div>
+        <div class="dm-card">
+          <div class="dm-card-cover">奇</div>
+          <h3>《异界便利店》漫画</h3>
+          <div class="dm-card-tags"><span>奇幻</span><span>经营</span><span>轻松</span></div>
+          <p class="dm-card-desc">异世界开便利店的设定很有趣，单元剧形式，适合睡前翻两话。</p>
+          <div class="dm-card-meta"><span>热度 8.4</span><span>更新至第22话</span></div>
+        </div>
+        <div class="dm-card">
+          <div class="dm-card-cover">恋</div>
+          <h3>《声恋》短动画</h3>
+          <div class="dm-card-tags"><span>恋爱</span><span>声控</span><span>治愈</span></div>
+          <p class="dm-card-desc">以声音为线索的恋爱短动画，氛围感强，适合戴耳机观看，CV阵容不错。</p>
+          <div class="dm-card-meta"><span>评分 8.6</span><span>更新至第9集</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 最新更新 -->
+  <section class="dm-section" id="update">
+    <div class="dm-container">
+      <div class="dm-section-header">
+        <h2 class="dm-section-title">最新更新动态</h2>
+        <a href="/#news" class="dm-section-more">资讯速递 →</a>
+      </div>
+      <div class="dm-update-list">
+        <div class="dm-update-item">
+          <span class="dm-update-time">2026-11-07</span>
+          <span class="dm-update-title">斩夜行</span>
+          <span class="dm-update-desc">第12集上线，主角团迎来首次正面团战，作画张数明显提升。</span>
+        </div>
+        <div class="dm-update-item">
+          <span class="dm-update-time">2026-11-07</span>
+          <span class="dm-update-title">偷偷藏不住</span>
+          <span class="dm-update-desc">漫画第48话更新，关键告白场景终于来了，评论区讨论度飙升。</span>
+        </div>
+        <div class="dm-update-item">
+          <span class="dm-update-time">2026-11-06</span>
+          <span class="dm-update-title">社畜变成猫</span>
+          <span class="dm-update-desc">番外篇上线，讲的是主角变成猫之前的一天，笑点依然稳定。</span>
+        </div>
+        <div class="dm-update-item">
+          <span class="dm-update-time">2026-11-06</span>
+          <span class="dm-update-title">雾山迷局</span>
+          <span class="dm-update-desc">第31话更新，新线索指向第二嫌疑人，作者在末尾加了小剧场。</span>
+        </div>
+        <div class="dm-update-item">
+          <span class="dm-update-time">2026-11-05</span>
+          <span class="dm-update-title">异界便利店</span>
+          <span class="dm-update-desc">第22话更新，新商品“记忆面包”登场，单元故事保持轻松调性。</span>
+        </div>
+        <div class="dm-update-item">
+          <span class="dm-update-time">2026-11-05</span>
+          <span class="dm-update-title">声恋</span>
+          <span class="dm-update-desc">第9集上线，男主声线首次线下公开，弹幕表示“耳朵怀孕”。</span>
+        </div>
+        <div class="dm-update-item">
+          <span class="dm-update-time">2026-11-04</span>
+          <span class="dm-update-title">星尘旅人</span>
+          <span class="dm-update-desc">新作短动画开播，科幻公路片风格，首集评价偏正面。</span>
+        </div>
+        <div class="dm-update-item">
+          <span class="dm-update-time">2026-11-04</span>
+          <span class="dm-update-title">今天也想吃拉面</span>
+          <span class="dm-update-desc">美食漫画第15话更新，本期介绍的是豚骨拉面的家庭做法。</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 分类入口 -->
+  <section class="dm-section" id="category">
+    <div class="dm-container">
+      <div class="dm-section-header">
+        <h2 class="dm-section-title">抖漫分类导航</h2>
+        <a href="/#hot" class="dm-section-more">全部作品 →</a>
+      </div>
+      <div class="dm-cat-grid">
+        <a href="/#hot" class="dm-cat-item"><span>🍬</span>甜宠恋爱</a>
+        <a href="/#hot" class="dm-cat-item"><span>⚔️</span>热血战斗</a>
+        <a href="/#hot" class="dm-cat-item"><span>🔍</span>悬疑推理</a>
+        <a href="/#hot" class="dm-cat-item"><span>😂</span>搞笑日常</a>
+        <a href="/#hot" class="dm-cat-item"><span>✨</span>奇幻异界</a>
+        <a href="/#hot" class="dm-cat-item"><span>🌙</span>治愈生活</a>
+        <a href="/#hot" class="dm-cat-item"><span>🚀</span>科幻冒险</a>
+        <a href="/#hot" class="dm-cat-item"><span>🍜</span>美食单元</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 深度解析正文 -->
+  <section class="dm-section" id="deep">
+    <div class="dm-container">
+      <div class="dm-section-header">
+        <h2 class="dm-section-title">深度解析：抖漫内容的吸引力在哪</h2>
+      </div>
+      <div class="dm-deep">
+        <p>
+          抖漫内容最直观的特点是“短平快”。短动画单集通常在5到12分钟之间，漫画单话阅读时间
+          也大多控制在几分钟内。这种节奏天然适合通勤、午休、睡前这类碎片场景。但短不等于浅，
+          很多抖漫作品在有限篇幅里把爽点、悬念和情绪价值浓缩得很到位，第一话就能抓住读者。
+        </p>
+        <p>
+          从题材分布来看，甜宠和搞笑是抖漫内容的基本盘。甜宠向作品依赖人设和互动细节，
+          画风通常偏柔和，台词密度不高但信息量集中在表情和小动作上；搞笑向则更依赖节奏和
+          吐槽密度，短动画在这一块优势明显，因为笑点间隔短，不容易让人走神。悬疑和热血属于
+          进阶需求，读者愿意为连续反转和战斗作画买单，对更新频率也更敏感。
+        </p>
+        <p>
+          角色塑造上，抖漫作品普遍采用“标签先行、细节补全”的方式。主角在第一话就会亮出
+          核心性格标签，比如社畜、学霸、猫系、反差萌，让读者快速建立认知。后续再用小事件
+          去丰富人物层次。这种打法在短内容里非常高效，但也考验作者对“标签不崩”的把控力。
+          本站推荐卡片里会尽量注明角色类型和互动关系，方便你按喜好筛选。
+        </p>
+        <p>
+          视听表现方面，短动画受限于时长和成本，通常会在关键帧和配乐上集中发力。打戏作品
+          会优先保证战斗场景的流畅度，日常作品则更依赖色彩和声优表现。漫画这边，画风的
+          辨识度直接决定第一眼留存率，线条干净、分镜清晰的条漫更容易被持续追更。我们在
+          深度解析里也会关注作画稳定性和更新节奏，这两个因素对追更体验影响很大。
+        </p>
+        <p>
+          适合人群上，抖漫内容的覆盖范围其实比想象中宽。学生党喜欢甜宠和热血，上班族更偏向
+          治愈、搞笑和轻悬疑，还有一部分读者专门追“短小但完整”的单元故事。如果你刚开始
+          接触，建议从已完结或单集独立成篇的作品入手，降低追更压力。如果你已经是重度读者，
+          可以关注更新频率稳定的连载，配合评论区讨论一起看，体验会更好。
+        </p>
+        <p>
+          同类内容比较时，抖漫作品和传统长篇漫画、季番动画的差异主要在“消费门槛”和
+          “情绪回报周期”。长篇需要铺垫，抖漫则要求第一话就给出钩子。这也导致抖漫作品
+          在开篇质量上普遍不弱，但中后期能否稳住，就要看作者对节奏和人物关系的经营。
+          页面里的热门推荐和最新更新会持续反映这些变化，方便你判断一部作品当前值不值得入坑。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 体验指南 -->
+  <section class="dm-section" id="guide">
+    <div class="dm-container">
+      <div class="dm-section-header">
+        <h2 class="dm-section-title">浏览与追更体验指南</h2>
+      </div>
+      <div class="dm-guide-grid">
+        <div class="dm-guide-item">
+          <h3>📂 分类清晰好找</h3>
+          <p>甜宠、热血、悬疑、搞笑等入口直接放在分类区，不用翻页就能按口味筛选，减少无效点击。</p>
+        </div>
+        <div class="dm-guide-item">
+          <h3>📱 移动端阅读友好</h3>
+          <p>卡片和列表在手机端自动收缩为单列，文字大小和间距保持可读，通勤路上刷也不累眼。</p>
+        </div>
+        <div class="dm-guide-item">
+          <h3>🔔 更新追踪方便</h3>
+          <p>最新更新板块按日期排列，一眼能看到哪些作品有了新内容，配合资讯板块了解动态。</p>
+        </div>
+        <div class="dm-guide-item">
+          <h3>💬 评论区有参考价值</h3>
+          <p>评论来自不同偏好的读者，有安利也有中评，能帮你判断一部作品的实际观感。</p>
+        </div>
+        <div class="dm-guide-item">
+          <h3>🧭 推荐路径可扩展</h3>
+          <p>从热门卡片可以自然跳到深度解析、FAQ和相关资讯，浏览路径不中断。</p>
+        </div>
+        <div class="dm-guide-item">
+          <h3>⭐ 适合收藏回访</h3>
+          <p>页面结构稳定，板块位置固定，收藏后下次打开可以直接定位到更新或分类区域。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ 手风琴 -->
+  <section class="dm-section" id="faq">
+    <div class="dm-container">
+      <div class="dm-section-header">
+        <h2 class="dm-section-title">常见问题</h2>
+      </div>
+      <div class="dm-faq-list">
+        <div class="dm-faq-item">
+          <div class="dm-faq-q">抖漫内容一般从哪里开始看比较好？</div>
+          <div class="dm-faq-a">建议先从热门推荐区挑一部题材感兴趣的短动画或漫画，优先选已完结或集数较少的作品，降低追更压力。如果喜欢快节奏，可以看搞笑或热血向短动画；如果偏好情感线，甜宠漫画更容易上手。看完一两部之后，再根据分类入口扩展到其他题材。</div>
+        </div>
+        <div class="dm-faq-item">
+          <div class="dm-faq-q">短动画和漫画在消费体验上有什么区别？</div>
+          <div class="dm-faq-a">短动画有配音、配乐和动态分镜，情绪传递更直接，适合不想动脑、想快速获得反馈的时候看。漫画的信息密度更高，阅读节奏由自己控制，适合慢慢品细节和台词。两者在抖漫内容里经常互相改编，先看哪一种主要取决于你当时的时间碎片大小和专注度。</div>
+        </div>
+        <div class="dm-faq-item">
+          <div class="dm-faq-q">追更时应该关注哪些信息？</div>
+          <div class="dm-faq-a">主要看更新频率和作者状态。稳定周更的作品追起来体验最好，频繁停更或画风波动大的作品要谨慎入坑。本站最新更新板块会标注日期和更新内容，深度解析里也会提到作画稳定性。另外评论区经常有人讨论更新质量，可以作为参考。</div>
+        </div>
+        <div class="dm-faq-item">
+          <div class="dm-faq-q">甜宠和搞笑题材会不会看多了腻？</div>
+          <div class="dm-faq-a">会有审美疲劳的可能，所以建议搭配着看。甜宠作品适合连续追一段，搞笑作品更适合穿插调剂。页面分类区把题材拆得比较细，可以按心情切换。如果你发现某类作品开头同质化严重，可以优先选带反差设定或单元剧结构的作品，新鲜感会更强。</div>
+        </div>
+        <div class="dm-faq-item">
+          <div class="dm-faq-q">这个页面会收录哪些类型的抖漫作品？</div>
+          <div class="dm-faq-a">目前主要覆盖短动画、条漫和轻量连载漫画，题材包括甜宠、热血、悬疑、搞笑、奇幻、治愈、科幻和美食单元。页面更偏向近期有讨论度或有稳定更新的作品，不会收录全部内容，但热门和更新板块会持续调整，尽量反映当前值得看的作品。</div>
+        </div>
+        <div class="dm-faq-item">
+          <div class="dm-faq-q">怎么判断一部抖漫作品适不适合自己？</div>
+          <div class="dm-faq-a">先看推荐卡片上的类型标签和简短看点，再看评论区的实际反馈。如果你对画风敏感，可以优先选有封面展示的作品；如果你更在意剧情，可以看深度解析里对节奏和反转的评价。最直接的办法是先试看第一话或第一集，抖漫内容篇幅短，试错成本不高。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 用户评论 -->
+  <section class="dm-section" id="comments">
+    <div class="dm-container">
+      <div class="dm-section-header">
+        <h2 class="dm-section-title">用户评论与讨论</h2>
+      </div>
+      <div class="dm-comments">
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">追</span>
+            <span class="dm-comment-name">追更不睡觉</span>
+            <span class="dm-comment-date">2026-11-06</span>
+          </div>
+          <p class="dm-comment-text">《斩夜行》第12集打戏真的可以，8分钟里塞了两场战斗还不乱，作画比上一集稳。希望后面别崩。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">甜</span>
+            <span class="dm-comment-name">甜度超标警告</span>
+            <span class="dm-comment-date">2026-11-05</span>
+          </div>
+          <p class="dm-comment-text">偷偷藏不住漫画第48话我看了三遍，分镜卡在告白前那一格太会了，评论区全是尖叫。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">路</span>
+            <span class="dm-comment-name">路人甲看番</span>
+            <span class="dm-comment-date">2026-11-04</span>
+          </div>
+          <p class="dm-comment-text">社畜变成猫适合午休看，一集五分钟不用动脑，但有几集笑点重复了，希望第二季换点新梗。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">推</span>
+            <span class="dm-comment-name">推理爱好者小周</span>
+            <span class="dm-comment-date">2026-11-03</span>
+          </div>
+          <p class="dm-comment-text">雾山迷局第31话给的线索指向第二嫌疑人，但我总觉得作者在误导。有没有人一起盘时间线？</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">画</span>
+            <span class="dm-comment-name">画风控阿茶</span>
+            <span class="dm-comment-date">2026-11-02</span>
+          </div>
+          <p class="dm-comment-text">异界便利店的画风不算精致，但胜在舒服，线条干净，单元故事也不拖，睡前看刚刚好。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">声</span>
+            <span class="dm-comment-name">声控晚期</span>
+            <span class="dm-comment-date">2026-11-01</span>
+          </div>
+          <p class="dm-comment-text">声恋第9集建议戴耳机，男主那句低音一出来我直接回放，剧情其实一般但氛围拉满了。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">中</span>
+            <span class="dm-comment-name">中立看客</span>
+            <span class="dm-comment-date">2026-10-30</span>
+          </div>
+          <p class="dm-comment-text">热门推荐里的甜宠浓度有点高，希望能多推点悬疑和科幻，最近短动画同质化有点明显。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">拉</span>
+            <span class="dm-comment-name">拉面不加葱</span>
+            <span class="dm-comment-date">2026-10-29</span>
+          </div>
+          <p class="dm-comment-text">今天也想吃拉面更新了，虽然剧情简单但美食画得真不错，半夜看会饿，建议配宵夜。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">新</span>
+            <span class="dm-comment-name">新入坑的小李</span>
+            <span class="dm-comment-date">2026-10-27</span>
+          </div>
+          <p class="dm-comment-text">刚接触抖漫，从这个页面按分类找了甜宠和搞笑各一部，试错成本确实低，比乱搜强。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">更</span>
+            <span class="dm-comment-name">更新催更机</span>
+            <span class="dm-comment-date">2026-10-25</span>
+          </div>
+          <p class="dm-comment-text">星尘旅人首集质感不错，科幻公路片的感觉，就是更新太慢，希望别变成有生之年。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">漫</span>
+            <span class="dm-comment-name">漫画柜子</span>
+            <span class="dm-comment-date">2026-10-22</span>
+          </div>
+          <p class="dm-comment-text">建议页面加个“已完结”筛选，有些短篇不想追更，一次看完才舒服。</p>
+        </div>
+        <div class="dm-comment">
+          <div class="dm-comment-header">
+            <span class="dm-avatar">笑</span>
+            <span class="dm-comment-name">笑点很低</span>
+            <span class="dm-comment-date">2026-10-20</span>
+          </div>
+          <p class="dm-comment-text">社畜变成猫的番外比正片还好笑，尤其是猫开会那段，建议直接出第二季。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 相关资讯 -->
+  <section class="dm-section" id="news">
+    <div class="dm-container">
+      <div class="dm-section-header">
+        <h2 class="dm-section-title">抖漫相关资讯</h2>
+        <a href="/#update" class="dm-section-more">更多动态 →</a>
+      </div>
+      <div class="dm-news-grid">
+        <div class="dm-news-card">
+          <div class="dm-news-date">2026-11-07</div>
+          <h3>短动画《斩夜行》第12集作画引讨论</h3>
+          <p>本集战斗场景张数增加，观众反馈节奏明显加快，制作组在社交平台表示后续会保持。</p>
+        </div>
+        <div class="dm-news-card">
+          <div class="dm-news-date">2026-11-06</div>
+          <h3>甜宠漫画《偷偷藏不住》进入告白篇</h3>
+          <p>漫画更新至第48话，关键剧情节点到来，平台单话评论量创近期新高。</p>
+        </div>
+        <div class="dm-news-card">
+          <div class="dm-news-date">2026-11-05</div>
+          <h3>《雾山迷局》作者发布时间线整理</h3>
+          <p>针对读者对剧情时间线的疑问，作者在番外中补充了案件时间表，方便读者复盘。</p>
+        </div>
+        <div class="dm-news-card">
+          <div class="dm-news-date">2026-11-04</div>
+          <h3>新作短动画《星尘旅人》开播</h3>
+          <p>科幻公路片题材，首集评价偏正面，观众关注后续单元故事的展开方式。</p>
+        </div>
+        <div class="dm-news-card">
+          <div class="dm-news-date">2026-11-02</div>
+          <h3>《社畜变成猫》番外篇上线</h3>
+          <p>番外讲述主角变成猫之前的一天，延续正片搞笑风格，适合老观众补看。</p>
+        </div>
+        <div class="dm-news-card">
+          <div class="dm-news-date">2026-10-30</div>
+          <h3>抖漫内容消费趋势：短篇漫画更受欢迎</h3>
+          <p>近期数据显示，单话阅读时间在5分钟以内的漫画作品留存率更高，单元剧结构更受青睐。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="dm-footer" id="footer">
+    <div class="dm-container">
+      <div class="dm-footer-grid">
+        <div>
+          <h4>抖漫</h4>
+          <p>抖漫专题聚合页，整理短动画、漫画连载与追更资讯。所有内容信息仅供参考，页面不提供在线播放或阅读服务。</p>
+        </div>
+        <div>
+          <h4>快速入口</h4>
+          <div class="dm-footer-links">
+            <a href="/#hot">热门推荐</a>
+            <a href="/#update">最新更新</a>
+            <a href="/#category">分类导航</a>
+            <a href="/#deep">深度解析</a>
+          </div>
+        </div>
+        <div>
+          <h4>帮助</h4>
+          <div class="dm-footer-links">
+            <a href="/#faq">常见问题</a>
+            <a href="/#guide">体验指南</a>
+            <a href="/#comments">用户评论</a>
+            <a href="/#news">相关资讯</a>
+          </div>
+        </div>
+        <div>
+          <h4>友情链接</h4>
+          <div class="dm-footer-links">
+            <a href="#">动漫资讯站</a>
+            <a href="#">漫画推荐社区</a>
+            <a href="#">短动画观察</a>
+            <a href="#">追更日历</a>
+          </div>
+        </div>
+      </div>
+      <div class="dm-footer-bottom">
+        <span>© 2026 抖漫专题内容聚合页 · 内容仅供交流参考</span>
+        <span>免责声明：本站不存储任何内容资源，推荐信息来自公开讨论与编辑整理。</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+  </html>
